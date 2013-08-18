@@ -1,0 +1,44 @@
+// mvn install:install-file -Dfile=build/libs/zxing-integration.aar -DgroupId=me.dm7.zxing.android -DartifactId=zxing-integration -Dversion=1.0 -Dpackaging=aar
+// 
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+apply plugin: 'android-library'
+
+repositories {
+    mavenCentral()
+}
+ 
+dependencies {
+    compile 'com.android.support:support-v4:18.0.0'
+}
+ 
+android {
+    compileSdkVersion 18
+    buildToolsVersion "18.0.1"
+ 
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 18
+        versionCode 3
+        versionName '3.0'
+    }
+}
+
+task publishToLocal(type: Exec, dependsOn: [clean, assemble]) {  
+  commandLine 'mvn', 'install:install-file', '-Dfile=build/libs/jrengage.aar',  '-DgroupId=me.dm7.jrengage.android', '-DartifactId=jrengage', '-Dversion=3.0', '-Dpackaging=aar'
+
+  //store the output instead of printing to the console:
+  standardOutput = new ByteArrayOutputStream()
+
+  //extension method stopTomcat.output() can be used to obtain the output:
+  ext.output = {
+    return standardOutput.toString()
+  }
+}
