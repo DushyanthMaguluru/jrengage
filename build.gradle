@@ -26,7 +26,7 @@ uploadArchives {
 
         pom.groupId = 'me.dm7.jrengage.android'
         pom.artifactId = 'jrengage'
-        pom.version = '3.0'
+        pom.version = '3.2'
         pom.packaging = 'aar'
     }                                                                           
 }
@@ -47,12 +47,12 @@ android {
         minSdkVersion 8
         targetSdkVersion 18
         versionCode 3
-        versionName '3.0'
+        versionName '3.2'
     }
 }
 
 task publishToLocal(type: Exec) {  
-    commandLine 'mvn', 'install:install-file', '-Dfile=build/libs/jrengage.aar',  '-DgroupId=me.dm7.jrengage.android', '-DartifactId=jrengage', '-Dversion=3.0', '-Dpackaging=aar'
+    commandLine 'mvn', 'install:install-file', '-Dfile=build/libs/jrengage.aar',  '-DgroupId=me.dm7.jrengage.android', '-DartifactId=jrengage', '-Dversion=3.2', '-Dpackaging=aar'
 
     //store the output instead of printing to the console:
     standardOutput = new ByteArrayOutputStream()
