@@ -1,5 +1,5 @@
 // mvn install:install-file -Dfile=build/libs/zxing-integration.aar -DgroupId=me.dm7.zxing.android -DartifactId=zxing-integration -Dversion=1.0 -Dpackaging=aar
-// 
+//
 
 buildscript {
     repositories {
@@ -11,43 +11,81 @@ buildscript {
 }
 apply plugin: 'android-library'
 apply plugin: 'maven'
+apply plugin: 'signing'
 
-uploadArchives {                                                                
-    repositories.mavenDeployer {                                                
-        repository(url: "http://nexus.dm7.me/content/repositories/releases") {
-            authentication(userName: nexusUserName , password: nexusPassword)
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: sonatypeRepo) {
+            authentication(userName: sonatypeUsername , password: sonatypePassword)
             releases(updatePolicy: 'always')
         }
 
-        snapshotRepository(url: "http://nexus.dm7.me/content/repositories/snapshots") {
-            authentication(userName: nexusUserName , password: nexusPassword)
+        snapshotRepository(url: sonatypeSnapshotRepo) {
+            authentication(userName: sonatypeUsername , password: sonatypePassword)
             snapshots(updatePolicy: 'always')
         }
 
-        pom.groupId = 'me.dm7.jrengage.android'
-        pom.artifactId = 'jrengage'
-        pom.version = '3.4'
-        pom.packaging = 'aar'
-    }                                                                           
+        pom.project {
+            name 'jrengage'
+            version '3.4'
+            groupId 'me.dm7.jrengage.android'
+            packaging 'aar'
+            artifactId 'jrengage'
+            description "This is just a clone of the official janrain repo with only addition being the build.gradle file."
+            url 'https://github.com/dm77/jrengage'
+
+            scm {
+                url 'scm:git@github.com:dm77/jrengage.git'
+                connection 'scm:git@github.com:dm77/jrengage.git'
+                developerConnection 'scm:git@github.com:dm77/jrengage.git'
+            }
+
+            licenses {
+                license {
+                    name 'Berkeley License'
+                    url 'https://github.com/janrain/engage.android/blob/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'dm77'
+                    name 'Dushyanth Maguluru'
+                    email 'dushyanth.maguluru@gmail.com'
+                }
+            }
+        }
+    }
 }
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/groups/public'
+    }
 }
- 
+
 dependencies {
     compile 'com.android.support:support-v4:20.0.0'
 }
- 
+
 android {
     compileSdkVersion 19
     buildToolsVersion "20"
- 
+
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 19
-        versionCode 33
-        versionName '3.3'
+        versionCode 34
+        versionName '3.4'
     }
 }
 
