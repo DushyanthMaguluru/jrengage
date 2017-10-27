@@ -4,6 +4,8 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
+        maven { url 'https://maven.google.com' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
@@ -34,7 +36,7 @@ uploadArchives {
 
         pom.project {
             name 'jrengage'
-            version '3.5'
+            version '3.6'
             groupId 'me.dm7.jrengage.android'
             packaging 'aar'
             artifactId 'jrengage'
@@ -84,8 +86,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 35
-        versionName '3.5'
+        versionCode 36
+        versionName '3.6'
     }
 }
 
