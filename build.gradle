@@ -1,5 +1,4 @@
-// mvn install:install-file -Dfile=build/libs/zxing-integration.aar -DgroupId=me.dm7.zxing.android -DartifactId=zxing-integration -Dversion=1.0 -Dpackaging=aar
-//
+// mvn install:install-file -Dfile=jrengage-release.aar -DgroupId=me.dm7.jrengage.android -DartifactId=jrengage -Dversion=3.7 -Dpackaging=aar
 
 buildscript {
     repositories {
@@ -16,7 +15,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 signing {
-    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    required { gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
 }
 
@@ -36,7 +35,7 @@ uploadArchives {
 
         pom.project {
             name 'jrengage'
-            version '3.6'
+            version '3.8'
             groupId 'me.dm7.jrengage.android'
             packaging 'aar'
             artifactId 'jrengage'
@@ -73,21 +72,22 @@ repositories {
     maven {
         url 'https://oss.sonatype.org/content/groups/public'
     }
+    google()
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:27.0.0'
+    compile 'com.android.support:support-v4:21.0.3'
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 21
     buildToolsVersion "26.0.2"
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 9
         targetSdkVersion 25
-        versionCode 36
-        versionName '3.6'
+        versionCode 38
+        versionName '3.8'
     }
 }
 
